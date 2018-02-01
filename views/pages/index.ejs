@@ -4,7 +4,9 @@
   <% include ../partials/header.ejs %>
 </head>
 <body>
-  <h1> This is an example nodejs app</h1>
-
+  <form action="/translate" method="post" enctype="multipart/form-data">
+    <input type="file" name="image" id="fileToUpload">
+    <input type="submit" value="Upload Image" name="submit">
+  </form>
 </body>
 </html>
