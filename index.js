@@ -5,14 +5,16 @@ var upload = multer({ dest: 'upload/' })
 //var translate = require('../translate');
 const PORT = process.env.PORT || 5000;
 
-var app =express();
+var app = express();
 
-
-app.use(express.static(path.join(__dirname, 'public')));
+// View engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.get('/', (req, res) => res.render('pages/index'));
 
+// Set static path
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', (req, res) => res.render('pages/index'));
 
 app.post('/translate', upload.single('image'), function (req, res, next) {
   // req.files is array of `photos` files 
