@@ -13,9 +13,13 @@ This is the bare bones version of our app with some very basic functionality imp
 So far we are using Javascript, HTML, and CSS
 
 The javascript dependecies we are currently using are using are 
-	ejs": "^2.5.6",			--writing html in javascript
+
+    ejs": "^2.5.6",		--writing html in javascript
+	
     express": "^4.15.2", 	--server stuff
+    
     kuroshiro": "^0.2.1", 	--translation placeholder
+    
     multer": "^1.3.0"  		--uploading files
 	
 If you have no idea whats going on at all watch this video at 2x speed 
