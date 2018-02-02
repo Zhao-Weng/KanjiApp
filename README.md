@@ -1,4 +1,4 @@
-# node-js-getting-started
+# Kanji App
 
 Hi team AI-Network
 
