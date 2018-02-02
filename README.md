@@ -1,5 +1,38 @@
 # node-js-getting-started
 
+Hi team AI-Network
+
+!!!--IMPORTANT--!!!
+COMMENTS ARE IMPORTANT, this isnt just a class project, Keith and the TA's will be evaluating our code. MAKE THEM HAPPY.
+If you plan on doing some work on the app please keep in mind that you also have to have DETAILED COMMIT MESSAGES
+Said commit messages must include WHO, WHAT, and WHY.
+We will be graded off of these and we will need to generate a detailed change-log using them so please follow this rule.
+
+This is the bare bones version of our app with some very basic functionality implemented courtesy of Zhao.
+
+So far we are using Javascript, HTML, and CSS
+
+The javascript dependecies we are currently using are using are 
+
+    ejs": "^2.5.6",		--writing html in javascript
+	
+    express": "^4.15.2", 	--server stuff
+    
+    kuroshiro": "^0.2.1", 	--translation placeholder
+    
+    multer": "^1.3.0"  		--uploading files
+	
+If you have no idea whats going on at all watch this video at 2x speed 
+https://www.youtube.com/watch?v=gnsO8-xJ8rs
+It will explain Express which is what our server is using, as well as our server's general file structure (including how the HTML and CSS will work) 
+
+
+*---------------------------------------------------------------------
+
+The stuff below is not super important anymore as most of the Heroku stuff has been removed but you might find it useful still
+
+*---------------------------------------------------------------------
+
 A barebones Node.js app using [Express 4](http://expressjs.com/).
 
 This application supports the [Getting Started with Node on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs) article - check it out.
