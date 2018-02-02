@@ -24,7 +24,9 @@ It will explain Express which is what our server is using, as well as our server
 
 
 *---------------------------------------------------------------------
+
 The stuff below is not super important anymore as most of the Heroku stuff has been removed but you might find it useful still
+
 *---------------------------------------------------------------------
 
 A barebones Node.js app using [Express 4](http://expressjs.com/).
