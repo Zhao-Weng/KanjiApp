@@ -4,9 +4,12 @@
   <% include ../partials/header.ejs %>
 </head>
 <body>
-  <form action="/translate" method="post" enctype="multipart/form-data">
-    <input type="file" name="image" id="fileToUpload">
-    <input type="submit" value="Upload Image" name="submit">
-  </form>
+  <div>
+    <form action="/translate" method="post" enctype="multipart/form-data">
+      <input type="file" name="image" id="fileToUpload">
+      <input type="submit" value="Upload Image" name="submit">
+    </form>
+  </div>
+  <p id="result"></p>
 </body>
 </html>

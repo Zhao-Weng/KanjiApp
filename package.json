@@ -11,6 +11,7 @@
     "test": "node test.js"
   },
   "dependencies": {
+    "@google-cloud/vision": "^0.15.0",
     "ejs": "^2.5.6",
     "express": "^4.15.2",
     "kuroshiro": "^0.2.1",
