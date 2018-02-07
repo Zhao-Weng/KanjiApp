@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "tribal-catfish-194008",
+  "private_key_id": "d4369e186a328913eeeac4053a1adf8151b0c06f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDC1uW5EmlEE+a/\nroFNxk8detgP4k0XyaM36O0Vggypf3mk5AF0MprJlnwu1BWAO8tqvNRSdsEkrhyF\nttl+6TJE9XNk9XXVgeAEYz7g6gsxGTUf9WvJGHdbx7rBK6/P4fhz4MkAuSHEPRMq\nqPglRh16qK/pAJ6Uk1uviRbNEJm6x8ky2oysThX29J7iwajwfVuwNv4RC7J1RyQw\nXxKVqoE9SFDqqObAmtJmvx5T8QEE8OXfkbFh47G3S2ft1qmY2g9xEdQpKF+pHSnI\nAkdjthI5YqJzmmqJQ/qyBsqcwrSumpWi9oLKxhwMIrbgm6vZCotQIDvxcAQ9w3GM\nAK6J4CRNAgMBAAECggEABsbhu6OzzJ3il0UzEyj0JILa1AabhtnJFw8/e9GHrjeU\nXBNgJ5IBB0T4McrHqqupwh8qRWoDAssZi98Vxo/G41YkOt08yX3YdF6dV8ZcOEt3\nqRJouthigms6iDCET3c9JI6rfx5xWbmEGqZA507+hH8siy6t1V4gwMTEacKLjk8I\nGgBcrOjvZjHAnynZEJir4uqAJ1uo5flcQtSnQtnc/hodiz51o/pteB6YXymnnNqt\nrIMrQJo/cmcperkSTXj1eCNo8YTvBv6joyuwcM6t3I93Qt59I7QIZ5MYxDPrccOQ\nIvcptx9yorpbW6GkWR7SVEODZEWkD+5OaJjWrqiLcQKBgQDl91cw4NsL5M6VXxs8\n3wEK2Uh7mx4Sq9ul+crRu8lm5aXlJ3QuIxq+t/E7B+12JdfXl4hrMZJXNuj3zXss\nuTkCoTQt809ItDa+7O8stoFcrMX12TuTS/GKPRhch5lOYniVM2ngoI0OGnTR9GDB\nXQsUcEENNUPW7w6F5zqAxitZiQKBgQDY5YwnmS4pVVimwExiP3K3MjFEbYa5Q9wb\n3lEVnPCP/G4uvYi9DuvImfbhW9iOA9hdYQq0VGyGntz58B3UTF4RAzPyXH6tvA4L\n3ebX6VT6XZNRF7s2APBFtme81Mo0TQfKIgZohSv/fjrwqPWR2JMYaofKo5L0eQ+D\nREauTFs3pQKBgFXNBxcRjijN4dYRehQoEDeAAm873OiSfo1aubWvHuHpZRAuvEZK\nirwF3VdtCcg/Ll0eCKQWBsfLkPiEDiUNppu4kcNjOH2j35k0xbglD/cH74Re3L+E\nYkZ1rRU48pYwX1UrraFFxdsxO8zqJP+AO5YQm/TVns4eu4hyUX2icqIhAoGAJ7v1\nrxNq13uhH/s+gwkolNMHH4gJFEuQOTLDG/iCQX53GOzz7d6b50X9ak+PHoUp0AGF\nGoAU2Zyk0szgShIrcWZqz82OD3nSAO6H6an/PVaDNGnqi/wkCEFgQ8GfwXETKj6N\nefxbkRSo64moYy2P1Ps/ISpSM6Mx6lRJtoiadVkCgYEA4sXmAypr8yXB++O0JKIF\n/9rdWj5SaSAiW4pNnsAUU0dJw9Bcv6wAp0B2Ycz81Hj6fnQEwUTK0lDVz2K0fS/5\nSLCs1bSUYbo7wOBoG75t1TygSgCEz5yYaTUiGcwcGcJJfzO8PjcYcC/NNSA4W5WD\ne255O2cRD2m3HaesOKkPIEo=\n-----END PRIVATE KEY-----\n",
+  "client_email": "kanjiapp@tribal-catfish-194008.iam.gserviceaccount.com",
+  "client_id": "104811435336700575476",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/kanjiapp%40tribal-catfish-194008.iam.gserviceaccount.com"
+}
