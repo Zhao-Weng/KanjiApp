@@ -11,7 +11,7 @@ var upload = multer({
 const vision = require('@google-cloud/vision');
 const kuroshiro = require("kuroshiro");
 var expressValidator = require('express-validator');
-
+var fs = require("fs");
 
 // Creates a Google Vision API client
 const client = new vision.ImageAnnotatorClient(); // for OCR
@@ -48,9 +48,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.get('/', (req, res) => res.render('pages/index', {
-		UserImage: UserImage
+		UserImage: UserImage,
 		boundingBoxes: boundingBoxes
 	}));
+
+app.get('/image.png', function (req, res) {
+    res.sendfile(path.resolve('./upload/image.png'));
+});
 
 app.post('/translate', upload.single('image'), function (req, res, next) {
   // req.files is array of `photos` files 
@@ -65,8 +69,16 @@ app.post('/translate', upload.single('image'), function (req, res, next) {
 	  	var fileName = req.file['path'];
 		UserImage.fileName = fileName;
 	  	//console.log(fileName);
+		var tempPath = req.file.path,
+	    targetPath = path.resolve('./upload/image.png');
+		//if (path.extname(req.file.name).toLowerCase() === '.png') {
+	        fs.rename(tempPath, targetPath, function(err) {
+	            //if (err) throw err;
+	            console.log("Upload completed!");
+	        });
+
 		client
-		  .textDetection(fileName)
+		  .textDetection(targetPath)
 		  .then(results => {
 		    const detections = results[0].textAnnotations;
 		    var text = detections[0]['description'];
@@ -90,8 +102,11 @@ app.post('/translate', upload.single('image'), function (req, res, next) {
 		  .catch(err => {
 		    console.error('ERROR:', err);
 		  });
-	  // req.body will contain the text fields, if there were any 
-	}
+		  // req.body will contain the text fields, if there were any 
+		  setTimeout(function() {
+	    	res.redirect('/');
+			}, 2000);
+	 }
 });
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));

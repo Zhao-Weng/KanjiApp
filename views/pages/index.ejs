@@ -44,5 +44,33 @@
     </div>
   </div>
 </div>
+  <!-- image that user uploads -->
+  <p>Uploaded Image:</p>
+  <canvas id="myCanvas" width="800" height="800" >
+  <img id="image" src="/image.png"/>
+  </canvas>
+  
+  <!-- draw bounding boxes on image -->
+  <script>
+  window.onload = function() {
+  var c=document.getElementById("myCanvas");
+  var ctx=c.getContext("2d");
+  var img=document.getElementById("image");  
+  ctx.drawImage(img,img.clientWidth,img.clientHeight);  
+  var canvas = document.getElementById('myCanvas');
+  var context = canvas.getContext('2d');
+  var box = <%- JSON.stringify(boundingBoxes) %>;
+  context.beginPath();
+  for (i = 1; i < box.length; i++) {  
+	context.rect(box[i][0].x, box[i][0].y, box[i][2].x - box[i][0].x, box[i][2].y - box[i][0].y)
+	context.fillStyle = "rgba(255, 255, 255, 0)";
+	context.fill();
+	context.lineWidth = 4;
+	context.strokeStyle = "blue";
+	context.stroke();	
+	}
+  }
+  </script> 
+
 </body>
 </html>
