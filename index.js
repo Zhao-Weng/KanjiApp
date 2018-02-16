@@ -9,6 +9,9 @@ var fs = require("fs");
 // Creates Express App
 var app = express();
 
+//initialize kuroshiro 
+kuroshiro.init();
+
 // view engine setup
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
@@ -21,48 +24,46 @@ const PORT = process.env.PORT || 5000;
 //Multer file upload
 var upload = multer({ 
 	dest: 'upload/',
-    limits: { 				//limits is for file verification
-      fieldNameSize: 255,
-      fileSize: 5242880,
-      files: 1,
-    }})
+	limits: { 				//limits is for file verification
+		fieldNameSize: 255,
+		fileSize: 5242880,
+		files: 1,
+	}})
 
 	//Makes errors a global variable so both multer
 	// and express-validator can access it.
 app.use(function(req, res, next){
-	app.locals.errors = null;
-	app.locals.boundingBoxes = new Array();
+	// app.locals.errors = null;
+	// app.locals.boundingBoxes = new Array(); <-didnt work
 	next();
 });
 
-//I think adding these to app.loacls makes this statement redundant
+//having these variables like this is pretty bad, how to fix?
 var errors = null;
 var boundingBoxes = new Array();
 
-
 app.use(expressValidator({
-  customValidators: {
-    isImage: function(value, mimetype) {
-		if (mimetype == undefined)
-			return false;
-		switch (mimetype) {
-			case 'image/jpg':
-				return true;
-			case 'image/jpeg':
-                return true;
-            case  'image/png':
-                return true;
-            default:
-                return false;
+	customValidators: {
+		isImage: function(value, mimetype) {
+			if (mimetype == undefined)
+				return false;
+			switch (mimetype) {
+				case 'image/jpg':
+					return true;
+				case 'image/jpeg':
+					return true;
+				case  'image/png':
+					return true;
+				default:
+					return false;
 }}}}));
 
+//this is an object to hold translation data
 var UserImage = {
 	filename:"placeholder text",
 	textDetections:"placeholder text",
-	textTranslation:"placeholder text"
-}	//this is an object to hold translation data
-	//the repeat statements below are to be there 
-	//until i can make sure nothing breaks by using it only
+	textPronunciation:"placeholder text"
+}	
 
 app.get('/', (req, res) => res.render('pages/index', {
 		UserImage: UserImage,
@@ -71,7 +72,7 @@ app.get('/', (req, res) => res.render('pages/index', {
 	}));
 
 app.get('/image.png', function (req, res) {
-    res.sendfile(path.resolve('./upload/image.png'));
+	res.sendfile(path.resolve('./upload/image.png'));
 });
 
 app.post('/translate', upload.single('image'), function (req, res, next) {
@@ -87,24 +88,22 @@ app.post('/translate', upload.single('image'), function (req, res, next) {
 	} else {
 		
 		// req.files is array of `photos` files 
-	  	var fileName = req.file['path'];
-		UserImage.fileName = fileName;
+		UserImage.fileName = req.file['path'];
 		
 		//bounding box code
 		var tempPath = req.file.path,
-	    targetPath = path.resolve('./upload/image.png');
+		targetPath = path.resolve('./upload/image.png');
 		//if (path.extname(req.file.name).toLowerCase() === '.png') {
-	        fs.rename(tempPath, targetPath, function(err) {
-	            //if (err) throw err;
-	            //console.log("Upload completed!");
-	        });
+			fs.rename(tempPath, targetPath, function(err) {
+				//if (err) throw err;
+				//console.log("Upload completed!");
+			});
 
 		client
 		  .textDetection(targetPath)
 		  .then(results => {
-		    const detections = results[0].textAnnotations;
-		    var text = detections[0]['description'];
-			UserImage.textDetections = text;
+			const detections = results[0].textAnnotations;
+			UserImage.textDetections =  detections[0]['description'];
 
 			//set bounding boxes for image
 			boundingBoxes = new Array();
@@ -112,17 +111,13 @@ app.post('/translate', upload.single('image'), function (req, res, next) {
 				var box = detections[i]['boundingPoly']['vertices'];
 				boundingBoxes.push(box);
 			}
-			
-			// kuroshiro is ready
-		    kuroshiro.init(function (err) {
-			    var result = kuroshiro.toHiragana(text);
-				UserImage.textTranslation = result;		
-			});
+
+			UserImage.textPronunciation = kuroshiro.toHiragana(text);		
 		  })
-		  .catch(next());
+		  .catch(next);
 
 		  setTimeout(function() {
-	    	res.redirect('/');
+			res.redirect('/');
 			}, 2000);
 	// req.body will contain the text fields, if there were any 
 	 }
@@ -135,8 +130,6 @@ app.use(function(err, req, res, next){
 		errors: [{msg: err.message}],
 		boundingBoxes: boundingBoxes
 	});
-	//console.log(errors);
-	//res.status(400).send({error: err.message});
 });	
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
