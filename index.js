@@ -39,6 +39,7 @@ app.use(function(req, res, next){
 });
 
 //having these variables like this is pretty bad, how to fix?
+//should add them to the UserImage struct!
 var errors = null;
 var boundingBoxes = new Array();
 
@@ -112,7 +113,7 @@ app.post('/translate', upload.single('image'), function (req, res, next) {
 				boundingBoxes.push(box);
 			}
 
-			UserImage.textPronunciation = kuroshiro.toHiragana(text);		
+			UserImage.textPronunciation = kuroshiro.toHiragana(UserImage.textDetections);		
 		  })
 		  .catch(next);
 
