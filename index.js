@@ -12,6 +12,7 @@ var app = express();
 //initialize kuroshiro 
 kuroshiro.init();
 
+
 // view engine setup
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
@@ -21,14 +22,12 @@ app.set('view engine', 'ejs');
 const client = new vision.ImageAnnotatorClient(); // for OCR
 const PORT = process.env.PORT || 5000;
 
-//Multer file upload
-var upload = multer({ 
-	dest: 'upload/',
-	limits: { 				//limits is for file verification
-		fieldNameSize: 255,
-		fileSize: 5242880,
-		files: 1,
-	}})
+//get multer to use in memory storage
+var upload = multer({ storage: multer.memoryStorage(), limits: {fileSize: 1000 * 1000 * 12}});
+
+//the file that the user uploads
+var uploadedFile;
+
 
 	//Makes errors a global variable so both multer
 	// and express-validator can access it.
@@ -72,9 +71,6 @@ app.get('/', (req, res) => res.render('pages/index', {
 		boundingBoxes: boundingBoxes
 	}));
 
-app.get('/image.png', function (req, res) {
-	res.sendfile(path.resolve('./upload/image.png'));
-});
 
 app.post('/translate', upload.single('image'), function (req, res, next) {
 	//image validation
@@ -88,20 +84,15 @@ app.post('/translate', upload.single('image'), function (req, res, next) {
 		errors: errors});
 	} else {
 		
+		//save the uploaded file
+		uploadedFile = req.file;
+		console.log(uploadedFile);
+		
 		// req.files is array of `photos` files 
 		UserImage.fileName = req.file['path'];
-		
-		//bounding box code
-		var tempPath = req.file.path,
-		targetPath = path.resolve('./upload/image.png');
-		//if (path.extname(req.file.name).toLowerCase() === '.png') {
-			fs.rename(tempPath, targetPath, function(err) {
-				//if (err) throw err;
-				//console.log("Upload completed!");
-			});
-
+				
 		client
-		  .textDetection(targetPath)
+		  .textDetection(req.file.buffer)	//do text detection on buffer contents of file upload
 		  .then(results => {
 			const detections = results[0].textAnnotations;
 			UserImage.textDetections =  detections[0]['description'];
