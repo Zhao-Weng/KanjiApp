@@ -32,11 +32,11 @@ var upload = multer({
 
 	//Makes errors a global variable so both multer
 	// and express-validator can access it.
-app.use(function(req, res, next){
-	// app.locals.errors = null;
-	// app.locals.boundingBoxes = new Array(); <-didnt work
-	next();
-});
+// app.use(function(req, res, next){
+	// // app.locals.errors = null;
+	// // app.locals.boundingBoxes = new Array(); <-didnt work
+	// next();
+// });
 
 //having these variables like this is pretty bad, how to fix?
 //should add them to the UserImage struct!
@@ -85,7 +85,7 @@ app.post('/translate', upload.single('image'), function (req, res, next) {
 		res.render('pages/index', {
 		UserImage: UserImage,
 		boundingBoxes: boundingBoxes,
-		errors: errors})
+		errors: errors});
 	} else {
 		
 		// req.files is array of `photos` files 
@@ -115,8 +115,9 @@ app.post('/translate', upload.single('image'), function (req, res, next) {
 
 			UserImage.textPronunciation = kuroshiro.toHiragana(UserImage.textDetections);		
 		  })
-		  .catch(next);
-
+			.catch(err => {
+				console.error('ERROR:', err);
+		});
 		  setTimeout(function() {
 			res.redirect('/');
 			}, 2000);
@@ -125,12 +126,12 @@ app.post('/translate', upload.single('image'), function (req, res, next) {
 });
 
 //Error Handling
-app.use(function(err, req, res, next){
-	res.render('pages/index', {
-		UserImage: UserImage,
-		errors: [{msg: err.message}],
-		boundingBoxes: boundingBoxes
-	});
-});	
+// app.use(function(err, req, res, next){
+	// res.render('pages/index', {
+		// UserImage: UserImage,
+		// errors: [{msg: err.message}],
+		// boundingBoxes: boundingBoxes
+	// });
+// });	
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
