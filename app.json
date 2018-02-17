@@ -1,8 +1,8 @@
 {
-  "name": "Start on Heroku: Node.js",
-  "description": "A barebones Node.js app using Express 4",
-  "repository": "https://github.com/heroku/node-js-getting-started",
-  "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/master/public/node.svg",
+  "name": "Kanji Translation App",
+  "description": "A web app for translating kanji found within images",
+  "repository": "https://github.com/Zhao-Weng/KanjiApp",
+  "logo": "https://imgur.com/l8wpsw6",
   "keywords": ["node", "express", "heroku"],
   "image": "heroku/nodejs"
 }

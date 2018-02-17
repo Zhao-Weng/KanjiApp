@@ -5,6 +5,15 @@
 </head>
 <body>
   <div class="mx-auto mt-5" style="width: 200px;">
+      
+    <% if(errors != undefined){ %>
+        <ul>
+        <% errors.forEach(function(error){ %>
+            <li><%= error.msg %></li>
+        <% }) %>
+        </ul> 
+    <% } %>
+  
     <form action="/translate" method="post" enctype="multipart/form-data">
       <input type="file" name="image" id="fileToUpload" ><br><br>
       <input type="submit" value="Upload Image" name="submit" class="btn btn-secondary">
@@ -39,7 +48,7 @@
     </div>
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
       <div class="card-body">
-	  <%= UserImage.textTranslation %>
+	  <%= UserImage.textPronunciation %>
 	  </div>
     </div>
   </div>
