@@ -45,11 +45,21 @@ Make sure you have [Node.js](http://nodejs.org/) and the [Heroku CLI](https://cl
 $ git clone git@github.com:heroku/node-js-getting-started.git # or clone your own fork
 $ cd node-js-getting-started
 $ npm install
+$ export GOOGLE_APPLICATION_CREDENTIALS="./KanjiApp-d4369e186a32.json"
 $ npm start
 ```
 
 Your app should now be running on [localhost:5000](http://localhost:5000/).
 
+## Testing
+
+To check build correctness against unit tests in test/
+    run:
+
+```
+$ npm run test
+```
+    
 ## Deploying to Heroku
 
 ```
