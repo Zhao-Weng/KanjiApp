@@ -11,7 +11,7 @@ var fs = require("fs");
 var app = express();
 
 //initialize kuroshiro
-kuroshiro.init();
+kuroshiro.init(() => {});//console.log("Kuroshiro ready"));
 
 // view engine setup
 app.use(express.static(path.join(__dirname, 'public')));
@@ -104,6 +104,9 @@ function readGoogle(results) {
 		var box = detections[i]['boundingPoly']['vertices'];
 		boundingBoxes.push(box);
 	}
+	
+	//Get pronunciation data from kuroshiro
+	UserImage.textPronunciation = kuroshiro.toHiragana(UserImage.textDetections);
     //console.log(UserImage);
 }
 
@@ -139,8 +142,6 @@ function translationUpload(req, res, next) {
 		// Get Google API results
 		googleAPI.textDetection(targetPath).then(readGoogle);
 		
-		//Get pronunciation data from kuroshiro
-		UserImage.textPronunciation = kuroshiro.toHiragana(UserImage.textDetections);
 		setTimeout(function() {
 			res.redirect('/');
 		}, 2000);
