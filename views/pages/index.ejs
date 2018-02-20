@@ -4,60 +4,67 @@
   <% include ../partials/header.ejs %>
 </head>
 <body>
-  <div class="mx-auto mt-5" style="width: 200px;">
-      
-    <% if(errors != undefined){ %>
-        <ul>
-        <% errors.forEach(function(error){ %>
-            <li><%= error.msg %></li>
-        <% }) %>
-        </ul> 
-    <% } %>
-  
-    <form action="/translate" method="post" enctype="multipart/form-data">
-      <input type="file" name="image" id="fileToUpload" ><br><br>
-      <input type="submit" value="Upload Image" name="submit" class="btn btn-secondary">
-    </form>
-  </div>
-  <p id="result"></p>
-  
-  <!-- bootstrap accordion text -->
-  <div id="accordion">
-  <div class="card">
-    <div class="card-header" id="headingOne">
-      <h5 class="mb-0">
-        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Detected Text
-        </button>
-      </h5>
-    </div>
-	
-    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-      <div class="card-body">
-	  <%= UserImage.textDetections %>
-	  </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingTwo">
-      <h5 class="mb-0">
-        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Translation
-        </button>
-      </h5>
-    </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-      <div class="card-body">
-	  <%= UserImage.textPronunciation %>
-	  </div>
-    </div>
-  </div>
-</div>
-  <!-- image that user uploads -->
-  <p>Uploaded Image:</p>
-  <canvas id="myCanvas" width="800" height="800" >
-  <img id="image" src="/image.png"/>
-  </canvas>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">Kanji App - Kanji Pronunciation Assistance</a>
+      </div>
+    </nav>
+    <!-- Page Content -->
+    <div class="container">
+
+      <!-- Item Heading -->
+      <h1 class="my-4">
+
+		  <% if(errors != undefined){ %>
+		  <small>Errors: 
+			<ul>
+			<% errors.forEach(function(error){ %>
+				<%= error.msg %>
+			<% }) %>
+			</ul> 
+		  </small>
+		  <% } %>
+      </h1>
+
+      <!-- Item Row -->
+      <div class="row">
+
+        <div class="col-md-8">
+		    <canvas id="myCanvas" width="800" height="800" >
+			<img id="image" src="/image.png"/>
+			</canvas>
+        </div>
+
+        <div class="col-md-4">
+		<h3 class="my-3">Select an image</h3>
+		<!-- Form and Buttons --> 
+	  
+		<form action="/translate" method="post" enctype="multipart/form-data">
+		  <input type="file" name="image" id="fileToUpload" ><br><br>
+		  <input type="submit" value="Upload Image" name="submit" class="btn btn-secondary">
+
+			  <h3 class="my-3">Detected Text</h3>
+			  <p><%= UserImage.textDetections %></p>
+			  <h3 class="my-3">Kanji Pronunciations</h3>
+			  <ul>
+				<li><%= UserImage.textPronunciation %></li>
+			  </ul>
+			</div>
+
+		  </div>
+
+		</div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Ai-Network 2018 - CS130</p>
+      </div>
+      <!-- /.container -->
+    </footer>
   
   <!-- draw bounding boxes on image -->
   <script>

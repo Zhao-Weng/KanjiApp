@@ -11,7 +11,7 @@ var fs = require("fs");
 var app = express();
 
 //initialize kuroshiro
-kuroshiro.init(() => console.log("Kuroshiro ready"))
+kuroshiro.init();
 
 // view engine setup
 app.use(express.static(path.join(__dirname, 'public')));
@@ -65,9 +65,9 @@ app.use(expressValidator({
 
 //this is an object to hold translation data
 var UserImage = {
-	filename:"placeholder text",
-	textDetections:"placeholder text",
-	textPronunciation:"placeholder text"
+	filename:"",
+	textDetections:"",
+	textPronunciation:""
 }	
 
 function renderData(req, res) {
@@ -83,7 +83,7 @@ function resolvePath(pathStr) {
     if(fs.existsSync(pathStr)) {
         return path.resolve(pathStr);
     } else {
-        console.error('error');
+        //console.error('error');
         return undefined;
     }
 }
@@ -104,8 +104,7 @@ function readGoogle(results) {
 		var box = detections[i]['boundingPoly']['vertices'];
 		boundingBoxes.push(box);
 	}
-	UserImage.textPronunciation = kuroshiro.toHiragana(UserImage.textDetections);
-    console.log(UserImage);
+    //console.log(UserImage);
 }
 
 function isValidImageBody(req, res) {
@@ -123,13 +122,12 @@ function isValidImageBody(req, res) {
 }
 
 function translationUpload(req, res, next) {
-    if(isValidImageBody(req, res)){
+		if(isValidImageBody(req, res)){
 		// If valid image uploaded
-        
 		// req.files is array of `photos` files 
+		errors = null; //resets errors variable to remove error message
 		UserImage.filename = req.file['path'];
 		
-
 		var tempPath = req.file.path,
 		    targetPath = resolvePath('./upload/image.png');
 		//if (path.extname(req.file.name).toLowerCase() === '.png') {
@@ -139,28 +137,35 @@ function translationUpload(req, res, next) {
 			});
         
 		// Get Google API results
-		googleAPI.textDetection(targetPath).then(readGoogle)
-			.catch(err => {
-				console.error('ERROR:', err);
-		    });
+		googleAPI.textDetection(targetPath).then(readGoogle);
+		
+		//Get pronunciation data from kuroshiro
+		UserImage.textPronunciation = kuroshiro.toHiragana(UserImage.textDetections);
 		setTimeout(function() {
 			res.redirect('/');
 		}, 2000);
-
 	// req.body will contain the text fields, if there were any 
 	}
 }
 
 app.post('/translate', upload.single('image'), translationUpload);
 
-//Error Handling
-// app.use(function(err, req, res, next){
-	// res.render('pages/index', {
-		// UserImage: UserImage,
-		// errors: [{msg: err.message}],
-		// boundingBoxes: boundingBoxes
-	// });
-// });	
+//error handling middleware
+app.use(function(err, req, res, next){
+	if (err.message == 'Cannot read property \'mimetype\' of undefined') {
+		errors = [{msg: "Please select a file"}];
+	}
+	else {
+		errors = [{msg: err.message}];
+	}
+	if(errors) {
+	res.render('pages/index', {
+		UserImage: UserImage,
+		boundingBoxes: boundingBoxes,
+		errors: errors});
+	return false;
+	}
+});	
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
