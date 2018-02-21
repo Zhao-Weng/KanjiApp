@@ -67,7 +67,9 @@ app.use(expressValidator({
 var UserImage = {
 	filename:"",
 	textDetections:"",
-	textPronunciation:""
+	textPronunciation:"",
+	textDetectionsList:[],
+	textPronunciationList:[]
 }	
 
 function renderData(req, res) {
@@ -98,16 +100,30 @@ app.get('/image.png', sendToUpload);
 function readGoogle(results) {
 	const detections = results[0].textAnnotations;
 	UserImage.textDetections =  detections[0]['description'];
-	//set bounding boxes for image
+	
+	//set bounding boxes for image, and set individual text detections for highlighting
 	boundingBoxes = new Array();
-	for (i = 0; i < detections.length; i++) {
+	var translation = "";
+	
+	//start at 1, since index 0 is the box/detection for the entire image
+	for (i = 1; i < detections.length; i++) {
 		var box = detections[i]['boundingPoly']['vertices'];
 		boundingBoxes.push(box);
+		
+		UserImage.textDetectionsList.push(detections[i]['description']);
+		var kuro = kuroshiro.toHiragana(detections[i]['description']);
+		UserImage.textPronunciationList.push(kuro);
+		translation += kuro;
 	}
 	
+	// note that the translation of the entire detection is not the same as the translations
+	// for the individual detections added together
+	// so translating the entire thing will not work with the highlighting feature
+	// instead, we can translate each detection individually and add them together
+	
 	//Get pronunciation data from kuroshiro
-	UserImage.textPronunciation = kuroshiro.toHiragana(UserImage.textDetections);
-    //console.log(UserImage);
+	//UserImage.textPronunciation = kuroshiro.toHiragana(UserImage.textDetections);
+	UserImage.textPronunciation = translation;	
 }
 
 function isValidImageBody(req, res) {
