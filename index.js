@@ -134,7 +134,7 @@ function translationUpload(req, res, next) {
 		var tempPath = req.file.path,
 		    targetPath = resolvePath('./upload/image.png');
 		//if (path.extname(req.file.name).toLowerCase() === '.png') {
-		    fs.rename(tempPath, targetPath, function(err) {
+		    fs.renameSync(tempPath, targetPath, function(err) {
 				//if (err) throw err;
 				//console.log("Upload completed!");
 			});
@@ -144,7 +144,7 @@ function translationUpload(req, res, next) {
 		
 		setTimeout(function() {
 			res.redirect('/');
-		}, 2000);
+		}, 4000);
 	// req.body will contain the text fields, if there were any 
 	}
 }
