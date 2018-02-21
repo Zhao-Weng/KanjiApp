@@ -1,8 +1,6 @@
 # Node build artifacts
 node_modules
 npm-debug.log
-upload
-!*/upload/image.png
 
 # Local development
 *.env
