@@ -41,33 +41,33 @@ mark {
 
         <div class="col-md-8">
 		    <canvas id="myCanvas" width="800" height="800" >
-			<img id="image" src="/image.png"/>
+			<img id="image" src= "/image.png" />
 			</canvas>
         </div>
 
         <div class="col-md-4">
-		<h3 class="my-3">Select an image</h3>
-		<!-- Form and Buttons --> 
-	  
-		<form action="/translate" method="post" enctype="multipart/form-data">
-		  <input type="file" name="image" id="fileToUpload" ><br><br>
-		  <input type="submit" value="Upload Image" name="submit" class="btn btn-secondary">
+			<h3 class="my-3">Select an image</h3>
+			<!-- Form and Buttons --> 
+		  
+			<form action="/translate" method="post" enctype="multipart/form-data">
+			  <input type="file" name="image" id="fileToUpload" ><br><br>
+			  <input type="submit" value="Upload Image" name="submit" class="btn btn-secondary">
 
 			  <h3 class="my-3"> Detected Text </h3>
 			  <p id="textDetections"> 
-			    <%= UserImage.textDetections %> 
+				   <%= UserImage.textDetections %> 
 			  </p>
 			  <h3 class="my-3">Kanji Pronunciations</h3>
 			  <ul>
-				<li id="textPronunciation">
-				  <%= UserImage.textPronunciation %>
-				</li>
+					<li id="textPronunciation">
+					  <%= UserImage.textPronunciation %>
+					</li>
 			  </ul>
-			</div>
+	    </div>
 
-		  </div>
+	  </div>
 
-		</div>
+	</div>
     <!-- /.container -->
 
     <!-- Footer -->
@@ -80,13 +80,17 @@ mark {
   
   <!-- draw bounding boxes on image, and set up highlighting -->
   <script>
+  	
   window.onload = function() {
   
     //draw rectangles on canvas over bounding boxes
     var c=document.getElementById("myCanvas");
     var ctx=c.getContext("2d");
-    var img=document.getElementById("image");  
-    ctx.drawImage(img,img.clientWidth,img.clientHeight);  
+	var img=document.getElementById("image"); 
+	console.log("src front end: " + img.getAttribute("src"));
+    ctx.drawImage(img,img.clientWidth,img.clientHeight); 
+    console.log("draw"); 
+
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
     var box = <%- JSON.stringify(boundingBoxes) %>;
@@ -147,6 +151,8 @@ mark {
       }
     }
   }
+
+
   </script> 
 
 </body>

@@ -65,7 +65,8 @@ app.use(expressValidator({
 
 //this is an object to hold translation data
 var UserImage = {
-	filename:"",
+	//image:"",
+	filename:"image.png",
 	textDetections:"",
 	textPronunciation:"",
 	textDetectionsList:[],
@@ -91,11 +92,13 @@ function resolvePath(pathStr) {
 }
 
 function sendToUpload(req, res) {
-	res.sendFile(resolvePath('./upload/image.png'));
+	console.log("hello");
+	res.sendFile(resolvePath('./upload/' + "image.png"));
+	//console.log('./upload/' + UserImage.filename);
 }
 
 app.get('/', renderData);
-app.get('/image.png', sendToUpload);
+app.get("/image.png", sendToUpload);
 
 function readGoogle(results) {
 	const detections = results[0].textAnnotations;
@@ -142,22 +145,33 @@ function isValidImageBody(req, res) {
 
 function translationUpload(req, res, next) {
 		if(isValidImageBody(req, res)){
-		// If valid image uploaded
-		// req.files is array of `photos` files 
-		errors = null; //resets errors variable to remove error message
-		UserImage.filename = req.file['path'];
-		
-		var tempPath = req.file.path,
-		    targetPath = resolvePath('./upload/image.png');
-		//if (path.extname(req.file.name).toLowerCase() === '.png') {
-		    fs.rename(tempPath, targetPath, function(err) {
-				//if (err) throw err;
-				//console.log("Upload completed!");
+			// If valid image uploaded
+			// req.files is array of `photos` files 
+			errors = null; //resets errors variable to remove error message
+			
+			//UserImage.image = req.files.image;
+			var tempPath = req.file.path;
+			var targetPath = "./upload/image.png";
+			UserImage.filename = path.basename(targetPath);
+			console.log(UserImage.filename);
+			//if (path.extname(req.file.name).toLowerCase() === '.png') {
+		    fs.renameSync(tempPath, targetPath);
+	        
+			// Get Google API results
+			googleAPI.textDetection(targetPath).then(readGoogle);
+			// remove redundant files 
+			fs.readdir('upload', (err, files) => {
+				if (files.length > 5) {
+					for (i = 0; i < files.length / 2; i ++) {
+						if (files[i] != UserImage.filename) {
+							fs.unlink("./upload/" + files[i], (err) => {
+							if (err) throw err;
+							console.log('successfully deleted half of files');
+							});		
+						}	
+					}
+				}
 			});
-        
-		// Get Google API results
-		googleAPI.textDetection(targetPath).then(readGoogle);
-		
 		setTimeout(function() {
 			res.redirect('/');
 		}, 2000);
@@ -168,21 +182,21 @@ function translationUpload(req, res, next) {
 app.post('/translate', upload.single('image'), translationUpload);
 
 //error handling middleware
-app.use(function(err, req, res, next){
-	if (err.message == 'Cannot read property \'mimetype\' of undefined') {
-		errors = [{msg: "Please select a file"}];
-	}
-	else {
-		errors = [{msg: err.message}];
-	}
-	if(errors) {
-	res.render('pages/index', {
-		UserImage: UserImage,
-		boundingBoxes: boundingBoxes,
-		errors: errors});
-	return false;
-	}
-});	
+// app.use(function(err, req, res, next){
+// 	if (err.message == 'Cannot read property \'mimetype\' of undefined') {
+// 		errors = [{msg: "Please select a file"}];
+// 	}
+// 	else {
+// 		errors = [{msg: err.message}];
+// 	}
+// 	if(errors) {
+// 	res.render('pages/index', {
+// 		UserImage: UserImage,
+// 		boundingBoxes: boundingBoxes,
+// 		errors: errors});
+// 	return false;
+// 	}
+// });	
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
