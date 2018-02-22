@@ -69,7 +69,8 @@ var UserImage = {
 	textDetections:"",
 	textPronunciation:"",
 	textDetectionsList:[],
-	textPronunciationList:[]
+	textPronunciationList:[],
+	filepath: ""
 }	
 
 function renderData(req, res) {
@@ -94,7 +95,7 @@ function sendToUpload(req, res) {
 	if(UserImage.filename){
 		console.log('Sending file');
 		console.log('%s',UserImage.filename);
-		rres.render('pages/index', {
+		res.render('pages/index', {
 			imaa: UserImage.filename+".png"
 		});
 		console.log('Sending Done');
@@ -173,8 +174,12 @@ function translationUpload(req, res, next) {
 				//console.log("Upload completed!");
 		});
 		console.log('Renaming Done');
+		UserImage.filepath = targetPath;
+		console.log(UserImage.filepath);
+		
 		// Get Google API results
 		googleAPI.textDetection(targetPath).then(readGoogle);
+				console.log('called google api');
 		//app.get(UserImage.filename.concat('.png'), sendToUpload);
 		setTimeout(function() {
 			res.redirect('/');
