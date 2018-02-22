@@ -172,7 +172,11 @@ function translationUpload(req, res, next) {
 				}
 			});
 		setTimeout(function() {
-			res.redirect('/');
+		    res.render('pages/index', {
+				UserImage: UserImage,
+				errors: errors,
+				boundingBoxes: boundingBoxes
+			})
 		}, 4000);
 	// req.body will contain the text fields, if there were any 
 	}
