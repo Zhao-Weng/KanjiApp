@@ -3,8 +3,16 @@
 <head>
   <% include ../partials/header.ejs %>
 </head>
-<body>
 
+<!-- set text highlighting to be yellow highlights -->
+<style>
+mark {
+    background-color: yellow;
+    color: black;
+}
+</style>
+
+<body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
@@ -45,11 +53,15 @@
 		  <input type="file" name="image" id="fileToUpload" ><br><br>
 		  <input type="submit" value="Upload Image" name="submit" class="btn btn-secondary">
 
-			  <h3 class="my-3">Detected Text</h3>
-			  <p><%= UserImage.textDetections %></p>
+			  <h3 class="my-3"> Detected Text </h3>
+			  <p id="textDetections"> 
+			    <%= UserImage.textDetections %> 
+			  </p>
 			  <h3 class="my-3">Kanji Pronunciations</h3>
 			  <ul>
-				<li><%= UserImage.textPronunciation %></li>
+				<li id="textPronunciation">
+				  <%= UserImage.textPronunciation %>
+				</li>
 			  </ul>
 			</div>
 
@@ -66,25 +78,74 @@
       <!-- /.container -->
     </footer>
   
-  <!-- draw bounding boxes on image -->
+  <!-- draw bounding boxes on image, and set up highlighting -->
   <script>
   window.onload = function() {
-  var c=document.getElementById("myCanvas");
-  var ctx=c.getContext("2d");
-  var img=document.getElementById("image");  
-  ctx.drawImage(img,img.clientWidth,img.clientHeight);  
-  var canvas = document.getElementById('myCanvas');
-  var context = canvas.getContext('2d');
-  var box = <%- JSON.stringify(boundingBoxes) %>;
-  context.beginPath();
-  for (i = 1; i < box.length; i++) {  
-	context.rect(box[i][0].x, box[i][0].y, box[i][2].x - box[i][0].x, box[i][2].y - box[i][0].y)
-	context.fillStyle = "rgba(255, 255, 255, 0)";
-	context.fill();
-	context.lineWidth = 4;
-	context.strokeStyle = "blue";
-	context.stroke();	
+  
+    //draw rectangles on canvas over bounding boxes
+    var c=document.getElementById("myCanvas");
+    var ctx=c.getContext("2d");
+    var img=document.getElementById("image");  
+    ctx.drawImage(img,img.clientWidth,img.clientHeight);  
+    var canvas = document.getElementById('myCanvas');
+    var context = canvas.getContext('2d');
+    var box = <%- JSON.stringify(boundingBoxes) %>;
+    context.beginPath();
+    for (i = 0; i < box.length; i++) {  
+	  context.rect(box[i][0].x, box[i][0].y, box[i][2].x - box[i][0].x, box[i][2].y - box[i][0].y)
+	  context.fillStyle = "rgba(255, 255, 255, 0)";
+	  context.fill();
+	  context.lineWidth = 4;
+	  context.strokeStyle = "blue";
+	  context.stroke();	
 	}
+	
+	//on mouse move, detect if it is over one of the rectangles
+	//if it is, then highlight the corresponding texts on the detection and pronounciation
+	canvas.onmousemove = function(e) {
+	  var rect = this.getBoundingClientRect(),
+	    x = e.clientX - rect.left,
+		y = e.clientY - rect.top,
+		i = 0, r;
+		
+	  var textDetections = <%- JSON.stringify(UserImage.textDetectionsList) %>;
+	  var textPronunciations = <%- JSON.stringify(UserImage.textPronunciationList) %>;
+
+	  for (i = 0; i < box.length; i++) {
+	    context.beginPath();
+		context.rect(box[i][0].x, box[i][0].y, box[i][2].x - box[i][0].x, box[i][2].y - box[i][0].y)
+		if ( context.isPointInPath(x,y)) {
+		
+		  highlight(textDetections[i], "detections");
+		  highlight(textPronunciations[i], "pronounciations");
+		}
+	  }
+	}
+	
+	//insert a highlight tag into the corresponding innerHTML
+	function highlight(text, type) {
+	  var inputText;
+	  var innerHTML;
+	  if (type == "detections"){
+		inputText = document.getElementById("textDetections");
+		innerHTML = <%- JSON.stringify(UserImage.textDetections) %>;
+	  }
+	  else if (type == "pronounciations") {
+	    inputText = document.getElementById("textPronunciation");
+		innerHTML = <%- JSON.stringify(UserImage.textPronunciation) %>;
+	  }
+	  else {
+	    return;
+	  }
+	  	  
+      var index = innerHTML.indexOf(text);
+   	  if ( index >= 0 )
+      { 
+        innerHTML = innerHTML.substring(0,index) + "<mark>" + innerHTML.substring(index,index+text.length) + "</mark>" + innerHTML.substring(index + text.length);
+		innerHTML.substring(index + text.length);
+        inputText.innerHTML = innerHTML; 
+      }
+    }
   }
   </script> 
 
