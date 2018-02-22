@@ -67,7 +67,9 @@ app.use(expressValidator({
 var UserImage = {
 	filename:"",
 	textDetections:"",
-	textPronunciation:""
+	textPronunciation:"",
+	textDetectionsList:[],
+	textPronunciationList:[]
 }	
 
 function renderData(req, res) {
@@ -89,7 +91,17 @@ function resolvePath(pathStr) {
 }
 
 function sendToUpload(req, res) {
-	res.sendFile(resolvePath('./upload/image.png'));
+	if(UserImage.filename){
+		console.log('Sending file');
+		console.log('%s',UserImage.filename);
+		rres.render('pages/index', {
+			imaa: UserImage.filename+".png"
+		});
+		console.log('Sending Done');
+	}
+	else{
+
+	}
 }
 
 app.get('/', renderData);
@@ -98,16 +110,32 @@ app.get('/image.png', sendToUpload);
 function readGoogle(results) {
 	const detections = results[0].textAnnotations;
 	UserImage.textDetections =  detections[0]['description'];
-	//set bounding boxes for image
+	
+	//set bounding boxes for image, and set individual text detections for highlighting
 	boundingBoxes = new Array();
-	for (i = 0; i < detections.length; i++) {
+	var translation = "";
+	
+	//start at 1, since index 0 is the box/detection for the entire image
+	for (i = 1; i < detections.length; i++) {
 		var box = detections[i]['boundingPoly']['vertices'];
 		boundingBoxes.push(box);
+		
+		UserImage.textDetectionsList.push(detections[i]['description']);
+		var kuro = kuroshiro.toHiragana(detections[i]['description']);
+		UserImage.textPronunciationList.push(kuro);
+		translation += kuro;
 	}
 	
+	// note that the translation of the entire detection is not the same as the translations
+	// for the individual detections added together
+	// so translating the entire thing will not work with the highlighting feature
+	// instead, we can translate each detection individually and add them together
+	
 	//Get pronunciation data from kuroshiro
-	UserImage.textPronunciation = kuroshiro.toHiragana(UserImage.textDetections);
-    //console.log(UserImage);
+	//UserImage.textPronunciation = kuroshiro.toHiragana(UserImage.textDetections);
+	UserImage.textPronunciation = translation;
+	console.log(`UserImage.textDetections: %s`,UserImage.textDetections);
+	console.log(`UserImage.textPronunciation: %s`,UserImage.textPronunciation);	
 }
 
 function isValidImageBody(req, res) {
@@ -129,22 +157,28 @@ function translationUpload(req, res, next) {
 		// If valid image uploaded
 		// req.files is array of `photos` files 
 		errors = null; //resets errors variable to remove error message
-		UserImage.filename = req.file['path'];
+		UserImage.filename = req.file.path;
+		//console.log('%s',req.file['path']);
 		
+		//console.log('%s',req.file.path);
+		//console.log('%s',req.file.path);
+
 		var tempPath = req.file.path,
-		    targetPath = resolvePath('./upload/image.png');
+			targetPath = req.file.path.concat('.png');
+		console.log('%s',targetPath);
+		console.log('%s',req.file.path);
 		//if (path.extname(req.file.name).toLowerCase() === '.png') {
-		    fs.rename(tempPath, targetPath, function(err) {
+		fs.rename(tempPath, targetPath, function(err) {
 				//if (err) throw err;
 				//console.log("Upload completed!");
-			});
-        
+		});
+		console.log('Renaming Done');
 		// Get Google API results
 		googleAPI.textDetection(targetPath).then(readGoogle);
-		
+		//app.get(UserImage.filename.concat('.png'), sendToUpload);
 		setTimeout(function() {
 			res.redirect('/');
-		}, 2000);
+		}, 5000);
 	// req.body will contain the text fields, if there were any 
 	}
 }
