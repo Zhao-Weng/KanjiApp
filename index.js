@@ -168,13 +168,13 @@ function translationUpload(req, res, next) {
 							if (err) throw err;
 							console.log('successfully deleted half of files');
 							});		
-						}	
+						}
 					}
 				}
 			});
 		setTimeout(function() {
 			res.redirect('/');
-		}, 2000);
+		}, 4000);
 	// req.body will contain the text fields, if there were any 
 	}
 }
@@ -182,21 +182,21 @@ function translationUpload(req, res, next) {
 app.post('/translate', upload.single('image'), translationUpload);
 
 //error handling middleware
-// app.use(function(err, req, res, next){
-// 	if (err.message == 'Cannot read property \'mimetype\' of undefined') {
-// 		errors = [{msg: "Please select a file"}];
-// 	}
-// 	else {
-// 		errors = [{msg: err.message}];
-// 	}
-// 	if(errors) {
-// 	res.render('pages/index', {
-// 		UserImage: UserImage,
-// 		boundingBoxes: boundingBoxes,
-// 		errors: errors});
-// 	return false;
-// 	}
-// });	
+app.use(function(err, req, res, next){
+	if (err.message == 'Cannot read property \'mimetype\' of undefined') {
+		errors = [{msg: "Please select a file"}];
+	}
+	else {
+		errors = [{msg: err.message}];
+	}
+	if(errors) {
+	res.render('pages/index', {
+		UserImage: UserImage,
+		boundingBoxes: boundingBoxes,
+		errors: errors});
+	return false;
+	}
+});	
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
