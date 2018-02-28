@@ -3,14 +3,42 @@
  * Start Bootstrap - Portfolio Item (https://startbootstrap.com/template-overviews/portfolio-item)
  * Copyright 2013-2017 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-portfolio-item/blob/master/LICENSE)
+ *	AND
+ * Start Bootstrap - Business Casual (https://startbootstrap.com/template-overviews/business-casual/)
+ * Copyright 2013-2018 Blackrock Digital LLC. 
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-portfolio-item/blob/master/LICENSE)
+ *
+ *Background ("bg2.jpg") from Autumn-Khajiit - (https://autumn-khajiit.deviantart.com/art/Kawaii-Cat-Background-662528892)
  */
 
 body {
   padding-top: 54px;
+  background: linear-gradient(rgba(47, 23, 15, 0.65), rgba(47, 23, 15, 0.65)), url("../assets/bg.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
 }
 
 @media (min-width: 992px) {
   body {
     padding-top: 56px;
   }
+}
+
+#mainNav {
+  background-color: rgba(52, 58, 64, 0.7);
+}
+
+.text-faded {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.footer {
+  background-color: rgba(52, 58, 64, 0.7);
+}
+
+.scroll-box {
+	overflow-y: scroll;
+	height: 400px;
+	padding: 1rem
 }

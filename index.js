@@ -177,7 +177,7 @@ function translationUpload(req, res, next) {
 				errors: errors,
 				boundingBoxes: boundingBoxes
 			})
-		}, 4000);
+		}, 2000);
 	// req.body will contain the text fields, if there were any 
 	}
 }

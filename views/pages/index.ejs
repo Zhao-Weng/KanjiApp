@@ -14,55 +14,65 @@ mark {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand" href="#">Kanji App - Kanji Pronunciation Assistance</a>
+        <a class="navbar-brand" href="#">Kanji App - Kanji Reading Assistance</a>
       </div>
     </nav>
     <!-- Page Content -->
-    <div class="container">
+    <div class="container-fluid">
 
       <!-- Item Heading -->
-      <h1 class="my-4">
-
+      <h1 class="mb-3">
 		  <% if(errors != undefined){ %>
-		  <small>Errors: 
-			<ul>
 			<% errors.forEach(function(error){ %>
-				<%= error.msg %>
+			<div class="alert alert-danger alert-dismissible fade show m-4" role="alert">
+				<strong>Error!</strong> <%= error.msg %>
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
 			<% }) %>
-			</ul> 
-		  </small>
 		  <% } %>
       </h1>
 
       <!-- Item Row -->
       <div class="row">
 
-        <div class="col-md-8">
-		    <canvas id="myCanvas" width="800" height="800" >
+        <div class="col-md-auto">
+		    <canvas id="myCanvas" width="1000" height="800" class="mx-3">
 			<img id="image" src= "/image.png" />
 			</canvas>
         </div>
 
-        <div class="col-md-4">
-			<h3 class="my-3">Select an image</h3>
-			<!-- Form and Buttons --> 
-		  
-			<form action="/translate" method="post" enctype="multipart/form-data">
-			  <input type="file" name="image" id="fileToUpload" ><br><br>
-			  <input type="submit" value="Upload Image" name="submit" class="btn btn-secondary">
-
-			  <h3 class="my-3"> Detected Text </h3>
-			  <p id="textDetections"> 
-				   <%= UserImage.textDetections %> 
-			  </p>
-			  <h3 class="my-3">Kanji Pronunciations</h3>
-			  <ul>
-					<li id="textPronunciation">
-					  <%= UserImage.textPronunciation %>
-					</li>
-			  </ul>
+        <div class="col-md-5">
+			<div class="card border-secondary">
+				<div class="card-body">
+					<h3 class="card-title">Select an image</h3>
+					<!-- Form and Buttons --> 
+					<form action="/translate" method="post" enctype="multipart/form-data">
+					  <input type="file" name="image" id="fileToUpload" ><br><br>
+					  <input type="submit" value="Upload Image" name="submit" class="btn btn-secondary">
+				</div>
+			</div>
+					
+			<div class="card border-secondary">
+				<div class="card-body">
+					<h3 class="card-title"> Detected Text </h3>
+					<p id="textDetections">
+					   <%= UserImage.textDetections %> 
+					</p>
+				</div>
+			</div>
+			
+			<div class="card border-secondary">
+				<div class="card-body">
+					<h3 class="card-title"> Kanji Readings </h3>
+					<div id="textPronunciation">
+						<%= UserImage.textPronunciation %>
+					</div>
+				</div>
+			</div>
 	    </div>
 
 	  </div>
@@ -71,7 +81,7 @@ mark {
     <!-- /.container -->
 
     <!-- Footer -->
-    <footer class="py-5 bg-dark">
+    <footer class="py-5 footer text-faded text-center">
       <div class="container">
         <p class="m-0 text-center text-white">Ai-Network 2018 - CS130</p>
       </div>
@@ -105,7 +115,7 @@ mark {
 	}
 	
 	//on mouse move, detect if it is over one of the rectangles
-	//if it is, then highlight the corresponding texts on the detection and pronounciation
+	//if it is, then highlight the corresponding texts on the detection and pronunciation
 	canvas.onmousemove = function(e) {
 	  var rect = this.getBoundingClientRect(),
 	    x = e.clientX - rect.left,
