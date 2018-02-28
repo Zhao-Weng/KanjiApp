@@ -1,4 +1,4 @@
-/*!
+/*
 	Layout Template From:
  * Start Bootstrap - Portfolio Item (https://startbootstrap.com/template-overviews/portfolio-item)
  * Copyright 2013-2017 Start Bootstrap
@@ -37,8 +37,6 @@ body {
   background-color: rgba(52, 58, 64, 0.7);
 }
 
-.scroll-box {
-	overflow-y: scroll;
-	height: 400px;
-	padding: 1rem
+.limit-width {
+	max-width: 50%;
 }
