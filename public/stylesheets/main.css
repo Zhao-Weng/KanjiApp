@@ -17,13 +17,9 @@ body {
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
+  font-size: 20pt;
 }
 
-@media (min-width: 992px) {
-  body {
-    padding-top: 56px;
-  }
-}
 
 #mainNav {
   background-color: rgba(52, 58, 64, 0.7);
@@ -38,5 +34,9 @@ body {
 }
 
 .limit-width {
-	max-width: 50%;
+	max-width: 40%;
+}
+
+.exception-font {
+	font-size: 14pt;
 }
