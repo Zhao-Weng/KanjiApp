@@ -1,7 +1,6 @@
 # Node build artifacts
 node_modules
 npm-debug.log
-upload
 
 # Local development
 *.env
@@ -15,4 +14,3 @@ docker-compose.yml
 # local test files
 testCV.js
 testAPI.js
-japanese-kanji-tattoo-collection-awesome.jpg
