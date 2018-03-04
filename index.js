@@ -104,8 +104,20 @@ function readGoogle(results) {
 		var box = detections[i]['boundingPoly']['vertices'];
 		boundingBoxes.push(box);
 	}
+<<<<<<< HEAD
 	UserImage.textPronunciation = kuroshiro.toHiragana(UserImage.textDetections);
     console.log(UserImage);
+=======
+	
+	// note that the translation of the entire detection is not the same as the translations
+	// for the individual detections added together
+	// so translating the entire thing will not work with the highlighting feature
+	// instead, we can translate each detection individually and add them together
+	
+	//Get pronunciation data from kuroshiro
+	//UserImage.textPronunciation = kuroshiro.toHiragana(UserImage.textDetections);
+	UserImage.textPronunciation = translation;
+>>>>>>> e7cd57a... Who: Nikola Samardzic
 }
 
 function isValidImageBody(req, res) {
@@ -148,7 +160,7 @@ function translationUpload(req, res, next) {
 		}, 2000);
 
 	// req.body will contain the text fields, if there were any 
-	}
+	    }
 }
 
 app.post('/translate', upload.single('image'), translationUpload);
