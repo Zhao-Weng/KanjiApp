@@ -53,13 +53,21 @@ Your app should now be running on [localhost:5000](http://localhost:5000/).
 
 ## Testing
 
-To check build correctness against unit tests in test/
+To check build correctness against unit tests, go to the test folder and
     run:
 
 ```
 $ npm run test
 ```
+
+To check test coverage, go to the KanjiApp (root) folder and run
     
+```
+$ istanbul cover --report html node_modules/.bin/_mocha -- -R spec
+```
+
+To view coverage data, open KanjiApp/coverage/index.html in your favourite
+    browser.
 ## Deploying to Heroku
 
 ```

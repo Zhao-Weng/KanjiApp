@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for KanjiApp/index.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">KanjiApp/</a> index.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">90.53% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>86/95</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">70.83% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>17/24</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">88.89% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>8/9</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">91.4% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>85/93</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const express = require('express');
+const sleep = require('sleep');
+const path = require('path');
+const vision = require('@google-cloud/vision');
+const kuroshiro = require('kuroshiro');
+var multer  = require('multer')
+var expressValidator = require('express-validator');
+var fs = require("fs");
+&nbsp;
+// Creates Express App
+var app = express();
+&nbsp;
+//initialize kuroshiro
+kuroshiro.init(() =&gt; {});//console.log("Kuroshiro ready"));
+&nbsp;
+// view engine setup
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+&nbsp;
+// Creates a Google Vision API client
+const googleAPI = new vision.ImageAnnotatorClient(); // for OCR
+const PORT = process.env.PORT || 5000;
+&nbsp;
+//Multer file upload
+var upload = multer({ 
+	dest: 'upload/',
+	limits: { 				//limits is for file verification
+		fieldNameSize: 255,
+		fileSize: 5242880,
+		files: 1,
+	}})
+&nbsp;
+// Makes errors a global variable so both multer
+// and express-validator can access it.
+// app.use(function(req, res, next){
+//     app.locals.errors = null;
+//     app.locals.boundingBoxes = new Array(); &lt;-didnt work
+//     next();
+// });
+&nbsp;
+//having these variables like this is pretty bad, how to fix?
+//should add them to the UserImage struct!
+var errors = null;
+var boundingBoxes = new Array();
+&nbsp;
+function isImage(value, mimetype){
+	if (mimetype == undefined)
+		return false;
+	switch (mimetype) {
+	case 'image/jpg':
+		return true;
+	case 'image/jpeg':
+		return true;
+	case  'image/png':
+		return true;
+	default:
+		return false;
+    }
+}
+&nbsp;
+app.use(expressValidator({
+	customValidators: {
+		isImage: isImage}}));
+&nbsp;
+//this is an object to hold translation data
+var UserImage = {
+	//image:"",
+	filename:"image.png",
+	textDetections:"",
+	textPronunciation:"",
+	textDetectionsList:[],
+	textPronunciationList:[]
+}	
+&nbsp;
+function renderData(req, res) {
+    res.render('pages/index', {
+		UserImage: UserImage,
+		errors: errors,
+		boundingBoxes: boundingBoxes
+	})
+}
+&nbsp;
+&nbsp;
+function resolvePath(pathStr) {
+    if(fs.existsSync(pathStr)) {
+        return path.resolve(pathStr);
+    } else {
+        //console.error('error');
+        return undefined;
+    }
+}
+&nbsp;
+function sendToUpload(req, res) {
+	res.sendFile(resolvePath('./upload/' + "image.png"));
+	//console.log('./upload/' + UserImage.filename);
+}
+&nbsp;
+app.get('/', renderData);
+app.get("/image.png", sendToUpload);
+&nbsp;
+function readGoogle(results) {
+	const detections = results[0].textAnnotations;
+	UserImage.textDetections =  detections[0]['description'];
+	
+	//set bounding boxes for image, and set individual text detections for highlighting
+	boundingBoxes = new Array();
+	var translation = "";
+	
+	//start at 1, since index 0 is the box/detection for the entire image
+	for (i = 1; i &lt; detections.length; i++) {
+		var box = detections[i]['boundingPoly']['vertices'];
+		boundingBoxes.push(box);
+		
+		UserImage.textDetectionsList.push(detections[i]['description']);
+		var kuro = kuroshiro.toHiragana(detections[i]['description']);
+		UserImage.textPronunciationList.push(kuro);
+		translation += kuro;
+	}
+	
+	// note that the translation of the entire detection is not the same as the translations
+	// for the individual detections added together
+	// so translating the entire thing will not work with the highlighting feature
+	// instead, we can translate each detection individually and add them together
+	
+	//Get pronunciation data from kuroshiro
+	//UserImage.textPronunciation = kuroshiro.toHiragana(UserImage.textDetections);
+	UserImage.textPronunciation = translation;
+}
+&nbsp;
+function isValidImageBody(req, res) {
+	//image validation
+	req.checkBody('image', 'Please upload an image file').isImage(req.file.mimetype);
+	var errors = req.validationErrors();
+	if(errors) {
+		res.render('pages/index', {
+		    UserImage: UserImage,
+		    boundingBoxes: boundingBoxes,
+		    errors: errors});
+        return false;
+	}
+    return true;
+}
+&nbsp;
+function translationUpload(req, res, next) {
+		if(isValidImageBody(req, res)){
+			// If valid image uploaded
+			// req.files is array of `photos` files 
+			errors = null; //resets errors variable to remove error message
+			
+			//UserImage.image = req.files.image;
+			var tempPath = req.file.path;
+			var targetPath = "./upload/image.png";
+			UserImage.filename = path.basename(targetPath);
+			console.log(UserImage.filename);
+			//if (path.extname(req.file.name).toLowerCase() === '.png') {
+		    fs.renameSync(tempPath, targetPath);
+	        
+			// Get Google API results
+			googleAPI.textDetection(targetPath).then(readGoogle);
+			// remove redundant files 
+			fs.readdir('upload', (err, files) =&gt; {
+				if (files.length &gt; 5) {
+					for (i = 0; i &lt; files.length / 2; i ++) {
+						<span class="missing-if-branch" title="else path not taken" >E</span>if (files[i] != UserImage.filename) {
+							fs.unlink("./upload/" + files[i], (err) =&gt; {
+<span class="cstat-no" title="statement not covered" >							if (err) <span class="cstat-no" title="statement not covered" >throw err;</span></span>
+<span class="cstat-no" title="statement not covered" >							console.log('successfully deleted half of files');</span>
+							});		
+						}
+					}
+				}
+			});
+		setTimeout(function() {
+		    res.render('pages/index', {
+				UserImage: UserImage,
+				errors: errors,
+				boundingBoxes: boundingBoxes
+			})
+		}, 4000);
+	// req.body will contain the text fields, if there were any 
+	    }
+}
+&nbsp;
+app.post('/translate', upload.single('image'), translationUpload);
+&nbsp;
+//error handling middleware
+app.use(<span class="fstat-no" title="function not covered" >function(err, req, res, next){</span>
+<span class="cstat-no" title="statement not covered" >	if (err.message == 'Cannot read property \'mimetype\' of undefined') {</span>
+<span class="cstat-no" title="statement not covered" >		errors = [{msg: "Please select a file"}];</span>
+	}
+	else {
+<span class="cstat-no" title="statement not covered" >		errors = [{msg: err.message}];</span>
+	}
+<span class="cstat-no" title="statement not covered" >	if(errors) {</span>
+<span class="cstat-no" title="statement not covered" >	res.render('pages/index', {</span>
+		UserImage: UserImage,
+		boundingBoxes: boundingBoxes,
+		errors: errors});
+<span class="cstat-no" title="statement not covered" >	return false;</span>
+	}
+});	
+&nbsp;
+app.listen(PORT, () =&gt; console.log(`Listening on ${ PORT }`));
+&nbsp;
+exports.isImage = isImage
+exports.renderData = renderData
+exports.resolvePath = resolvePath
+exports.sendToUpload = sendToUpload
+exports.readGoogle = readGoogle
+exports.translationUpload = translationUpload
+exports.isValidImageBody = isValidImageBody
+exports.UserImage = UserImage
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Mar 03 2018 19:24:38 GMT-0800 (PST)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

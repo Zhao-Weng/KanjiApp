@@ -125,7 +125,7 @@ function readGoogle(results) {
 	
 	//Get pronunciation data from kuroshiro
 	//UserImage.textPronunciation = kuroshiro.toHiragana(UserImage.textDetections);
-	UserImage.textPronunciation = translation;	
+	UserImage.textPronunciation = translation;
 }
 
 function isValidImageBody(req, res) {
@@ -179,7 +179,7 @@ function translationUpload(req, res, next) {
 			})
 		}, 4000);
 	// req.body will contain the text fields, if there were any 
-	}
+	    }
 }
 
 app.post('/translate', upload.single('image'), translationUpload);
