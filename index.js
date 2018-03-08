@@ -96,7 +96,7 @@ function resolvePath(pathStr) {
 
 function sendToUpload(req, res) {
 	console.log('Sending image back');
-	res.sendFile(resolvePath('.public/upload/' + UserImage.filename));
+	res.sendFile(resolvePath('./upload/' + UserImage.filename));
 	//console.log('./upload/' + UserImage.filename);
 }
 
