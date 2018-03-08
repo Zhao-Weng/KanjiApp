@@ -38,10 +38,10 @@ mark {
 
       <!-- Item Row -->
       <div class="row">
-
+				<script>alert(<%- JSON.stringify(UserImage.filename) %>)</script>
         <div class="col-md-8">
 		    <canvas id="myCanvas" width="800" height="800" >
-			<img id="image" src= "/image.png" />
+			<img id="image" src="<%= encodeURI(UserImage.filename) %>" />
 			</canvas>
         </div>
 
