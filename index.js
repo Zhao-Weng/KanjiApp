@@ -15,6 +15,7 @@ kuroshiro.init(() => {});//console.log("Kuroshiro ready"));
 
 // view engine setup
 app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'upload')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -24,7 +25,7 @@ const PORT = process.env.PORT || 5000;
 
 //Multer file upload
 var upload = multer({ 
-	dest: 'upload/',
+	dest: 'public/upload/',
 	limits: { 				//limits is for file verification
 		fieldNameSize: 255,
 		fileSize: 5242880,
@@ -74,6 +75,8 @@ var UserImage = {
 }	
 
 function renderData(req, res) {
+	console.log('Sending data back');
+	console.log(UserImage.filename);
     res.render('pages/index', {
 		UserImage: UserImage,
 		errors: errors,
@@ -92,12 +95,13 @@ function resolvePath(pathStr) {
 }
 
 function sendToUpload(req, res) {
-	res.sendFile(resolvePath('./upload/' + "image.png"));
+	console.log('Sending image back');
+	res.sendFile(resolvePath('.public/upload/' + UserImage.filename));
 	//console.log('./upload/' + UserImage.filename);
 }
 
-app.get('/', renderData);
-app.get("/image.png", sendToUpload);
+//app.get('/', renderData);
+//app.get('/'+UserImage.filename, sendToUpload);
 
 function readGoogle(results) {
 	const detections = results[0].textAnnotations;
@@ -150,12 +154,13 @@ function translationUpload(req, res, next) {
 			
 			//UserImage.image = req.files.image;
 			var tempPath = req.file.path;
-			var targetPath = "./upload/image.png";
-			UserImage.filename = path.basename(targetPath);
+			console.log(tempPath);
+			var targetPath = req.file.path+".png";
+			UserImage.filename = "/upload/"+path.basename(targetPath);
 			console.log(UserImage.filename);
 			//if (path.extname(req.file.name).toLowerCase() === '.png') {
 		    fs.renameSync(tempPath, targetPath);
-	        
+	        console.log('Renaming Done');
 			// Get Google API results
 			googleAPI.textDetection(targetPath).then(readGoogle);
 			// remove redundant files 
@@ -163,7 +168,7 @@ function translationUpload(req, res, next) {
 				if (files.length > 5) {
 					for (i = 0; i < files.length / 2; i ++) {
 						if (files[i] != UserImage.filename) {
-							fs.unlink("./upload/" + files[i], (err) => {
+							fs.unlink(".public/upload/" + files[i], (err) => {
 							if (err) throw err;
 							console.log('successfully deleted half of files');
 							});		
@@ -183,7 +188,8 @@ function translationUpload(req, res, next) {
 }
 
 app.post('/translate', upload.single('image'), translationUpload);
-
+app.get('/', renderData);
+app.get('/'+UserImage.filename, sendToUpload);
 //error handling middleware
 app.use(function(err, req, res, next){
 	if (err.message == 'Cannot read property \'mimetype\' of undefined') {
