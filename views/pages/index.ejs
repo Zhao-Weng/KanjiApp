@@ -55,16 +55,13 @@ mark {
 			</canvas>
         </div>
         <!-- /////Camera install///// -->
-			<!--video用于显示媒体设备的视频流，自动播放-->
 		<div class="col-md-auto mx-sm-auto my-5">
 			<video id="video" autoplay style="width: 480px;height: 320px"></video>
-			<!--camera button-->
 			<div>
 			<button id="capture">Shot!</button>
 			</div>
-			<!--canvas video snapshot-->
 			<canvas id="camera_canvas" width="480" height="320"></canvas>
-			<!-- /////Camera install///// -->
+		<!-- /////Camera install///// -->
 
         <div class="float-md-right limit-width mx-sm-auto my-5">
 			<div class="card border-secondary">
@@ -121,19 +118,19 @@ mark {
   <!-- draw bounding boxes on image, and set up highlighting -->
   <script>
   
-  // 访问用户媒体设备的兼容方法
+  // Visit user media and check the compability
 	function getUserMedia(constrains,success,error){
 	    if(navigator.mediaDevices.getUserMedia){
-	        //最新标准API
+	        //newest API
 	        navigator.mediaDevices.getUserMedia(constrains).then(success).catch(error);
 	    } else if (navigator.webkitGetUserMedia){
-	        //webkit内核浏览器
+	        //webkit broswer
 	        navigator.webkitGetUserMedia(constrains).then(success).catch(error);
 	    } else if (navigator.mozGetUserMedia){
-	        //Firefox浏览器
+	        //Firefox浏览器 broswer 
 	        navagator.mozGetUserMedia(constrains).then(success).catch(error);
 	    } else if (navigator.getUserMedia){
-	        //旧版API
+	        //old API
 	        navigator.getUserMedia(constrains).then(success).catch(error);
 	    }
 	}
@@ -142,32 +139,32 @@ mark {
 	var canvas = document.getElementById("camera_canvas");
 	var context = canvas.getContext("2d");
 
-	//成功的回调函数
+	//sucess callback function
 	function success(stream){
-	    //兼容webkit内核浏览器
+	    //webkit
 	    var CompatibleURL = window.URL || window.webkitURL;
-	    //将视频流设置为video元素的源
+	    //set the camera to be source of video
 	    video.src = CompatibleURL.createObjectURL(stream);
-	    //播放视频
+	    //play video
 	    video.play();
 	}
 
-	//异常的回调函数
+	//error callback funtion 
 	function error(error){
-	    console.log("访问用户媒体设备失败：",error.name,error.message);
+	    console.log("Fail to visit user media：",error.name,error.message);
 	}
 	if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia){
-	    //调用用户媒体设备，访问摄像头
+	    //visit user camera
 	    getUserMedia({
 	        video:{width:480,height:320}
 	    },success,error);
 	} else {
-	    alert("你的浏览器不支持访问用户媒体设备");
+	    alert("Your broswer dosen't support visiting user media");
 	}
 
-	//注册拍照按钮的单击事件
+	//Camera shot event
 	document.getElementById("capture").addEventListener("click",function(){
-	    //绘制画面
+	    //capture picture
 	    context.drawImage(video,0,0,480,320);
 	});
 
