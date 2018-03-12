@@ -103,23 +103,47 @@ function sendToUpload(req, res) {
 //app.get('/', renderData);
 //app.get('/'+UserImage.filename, sendToUpload);
 
+function isKanji(ch) {
+    return (ch >= "\u4e00" && ch <= "\u9faf") ||
+	(ch >= "\u3400" && ch <= "\u4dbf");
+}
+
 function readGoogle(results) {
 	const detections = results[0].textAnnotations;
-	UserImage.textDetections =  detections[0]['description'];
 	
 	//set bounding boxes for image, and set individual text detections for highlighting
 	boundingBoxes = new Array();
+	var detectionsKanji = "";
 	var translation = "";
+	
+	UserImage.textDetectionsList = new Array();
+	UserImage.textPronunciationList = new Array();
 	
 	//start at 1, since index 0 is the box/detection for the entire image
 	for (i = 1; i < detections.length; i++) {
-		var box = detections[i]['boundingPoly']['vertices'];
-		boundingBoxes.push(box);
 		
-		UserImage.textDetectionsList.push(detections[i]['description']);
-		var kuro = kuroshiro.toHiragana(detections[i]['description']);
-		UserImage.textPronunciationList.push(kuro);
-		translation += kuro;
+		var str = detections[i]['description'];
+		var hasKanji = false;
+		for (var j = 0; j < str.length; j++) {
+			var ch = str.charAt(j);
+			if ( (ch >= "\u4e00" && ch <= "\u9faf") || (ch >= "\u3400" && ch <= "\u4dbf") ){
+				hasKanji = true;
+				break;
+			}
+		}
+		
+		if (hasKanji) {
+			
+			var box = detections[i]['boundingPoly']['vertices'];
+			boundingBoxes.push(box);
+
+			detectionsKanji += detections[i]['description'];
+			UserImage.textDetectionsList.push(detections[i]['description']);
+			var kuro = kuroshiro.toHiragana(detections[i]['description']);
+			UserImage.textPronunciationList.push(kuro);
+			translation += kuro;
+		}
+		
 	}
 	
 	// note that the translation of the entire detection is not the same as the translations
@@ -130,6 +154,9 @@ function readGoogle(results) {
 	//Get pronunciation data from kuroshiro
 	//UserImage.textPronunciation = kuroshiro.toHiragana(UserImage.textDetections);
 	UserImage.textPronunciation = translation;
+	
+	//detections without non-kanji characters
+	UserImage.textDetections =  detectionsKanji;
 }
 
 function isValidImageBody(req, res) {
@@ -206,6 +233,7 @@ app.use(function(err, req, res, next){
 	return false;
 	}
 });	
+
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
