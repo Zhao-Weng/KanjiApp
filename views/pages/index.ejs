@@ -49,7 +49,7 @@ mark {
       <!-- Item Row -->
       <div class="row">
 		<div class="col-md-auto mx-sm-auto my-5">
-            <canvas id="myCanvas" width="800" height="800" >
+            <canvas id="myCanvas" width="600" height="600" >
 			<img id="image" src="<%= encodeURI(UserImage.filename) %>" />
 
 			</canvas>
@@ -117,20 +117,29 @@ mark {
     var ctx=c.getContext("2d");
 	var img=document.getElementById("image"); 
 	console.log("src front end: " + img.getAttribute("src"));
-    ctx.drawImage(img,img.clientWidth,img.clientHeight); 
-    console.log("draw"); 
+	
+	var hRatio = c.width / img.width    ;
+	var vRatio = c.height / img.height  ;
+	var ratio  = Math.min ( hRatio, vRatio );
+	ctx.drawImage(img, 0,0, img.width, img.height, 0,0,img.width*ratio, img.height*ratio);
 
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
     var box = <%- JSON.stringify(boundingBoxes) %>;
     context.beginPath();
     for (i = 0; i < box.length; i++) {  
-	  context.rect(box[i][0].x, box[i][0].y, box[i][2].x - box[i][0].x, box[i][2].y - box[i][0].y)
-	  context.fillStyle = "rgba(255, 255, 255, 0)";
-	  context.fill();
-	  context.lineWidth = 4;
-	  context.strokeStyle = "blue";
-	  context.stroke();	
+	
+		var x1 = box[i][0].x * ratio;
+		var x2 = box[i][2].x * ratio;
+		var y1 = box[i][0].y * ratio;
+		var y2 = box[i][2].y * ratio;
+		context.rect(x1, y1, x2 - x1, y2 - y1);
+		
+		context.fillStyle = "rgba(255, 255, 255, 0)";
+		context.fill();
+		context.lineWidth = 3;
+		context.strokeStyle = "blue";
+		context.stroke();	
 	}
 	
 	//on mouse move, detect if it is over one of the rectangles
@@ -146,9 +155,13 @@ mark {
 
 	  for (i = 0; i < box.length; i++) {
 	    context.beginPath();
-		context.rect(box[i][0].x, box[i][0].y, box[i][2].x - box[i][0].x, box[i][2].y - box[i][0].y)
-		if ( context.isPointInPath(x,y)) {
 		
+		var x1 = box[i][0].x * ratio;
+		var x2 = box[i][2].x * ratio;
+		var y1 = box[i][0].y * ratio;
+		var y2 = box[i][2].y * ratio;
+		context.rect(x1, y1, x2 - x1, y2 - y1);
+		if ( context.isPointInPath(x,y)) {
 		  highlight(textDetections[i], "detections");
 		  highlight(textPronunciations[i], "pronounciations");
 		}
@@ -175,7 +188,6 @@ mark {
    	  if ( index >= 0 )
       { 
         innerHTML = innerHTML.substring(0,index) + "<mark>" + innerHTML.substring(index,index+text.length) + "</mark>" + innerHTML.substring(index + text.length);
-		innerHTML.substring(index + text.length);
         inputText.innerHTML = innerHTML; 
       }
     }
