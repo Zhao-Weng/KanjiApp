@@ -1,4 +1,4 @@
-# Kanji-App Kanji Readings
+# Kanji-App: Kanji Reading Assistance
 
 This project was created for Keith Stevens during Paul Eggert's CS130 Software Engineering class at UCLA, during spring quarter 2018.
 
@@ -35,7 +35,7 @@ You will also need to enable the Google cloud vision API. To do so complete the 
 * Set up authentication with a service account so you can access the API from your local workstation.
 * Download API key in JSON format to the local project top directory, that is the same place where index.js is found.
 
-####From your command line:
+#### From your command line:
 
 ```
 # Clone this repository
