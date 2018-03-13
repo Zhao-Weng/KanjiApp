@@ -160,24 +160,23 @@ How to change our app to convert to a different language.
 There several things that would need to be changed to change our app to output phonetic spelling in a different language.
  
  ### Things that DO NOT need to change.
-```
 1. Google Cloud Vision OCR.
 	Google cloud can recognize tons of languages so no change needs to be made here.
 2. Pipeline for passing data to the main page for display.
 3. Image validation.
-3. Layout of web page, including bounding boxes, text highlighting, and hover events.
-```
+4. Layout and functionality of the web page, including bounding boxes, text highlighting, and hover events.
+
 
  ### Things that DO need to change.
-```
-1. Kuroshiro
+1. Kuroshiro.
 	You will need to use a different dictionary/library to convert detected words as Kuroshiro only handles Japanese.
 2. Text filtering function.
-	Our text filtering function (named "isKanji()") uses unicode checking. You will need to disable this or write a new function so that the new languages characters are not filtered out.
+	Our text filtering function (named "isKanji()") uses unicode checking.
+	You will need to disable this or write a new function so that the new languages characters are not filtered out.
 3. Display text. 
-	The display text is not internationalized, that is is does not change depending the languages setting of your system. The strings for things like "Readings", "Warning:...", and "Error:..."
-	will have to be manually changed.
-```
+	The display text is not internationalized, that is is does not change depending the languages setting of your system. 
+	The strings for things like "Readings", "Warning:...", and "Error:..." will have to be manually changed.
+
 
 ## Authors
 
