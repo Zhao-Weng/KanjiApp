@@ -11,11 +11,10 @@ var fs = require("fs");
 var app = express();
 
 //initialize kuroshiro
-kuroshiro.init(() => {});//console.log("Kuroshiro ready"));
+kuroshiro.init(() => {});
 
 // view engine setup
 app.use(express.static(path.join(__dirname, 'public')));
-//app.use(express.static(path.join(__dirname, 'upload')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -32,19 +31,8 @@ var upload = multer({
 		files: 1,
 	}})
 
-// Makes errors a global variable so both multer
-// and express-validator can access it.
-// app.use(function(req, res, next){
-//     app.locals.errors = null;
-//     app.locals.boundingBoxes = new Array(); <-didnt work
-//     next();
-// });
-
-//having these variables like this is pretty bad, how to fix?
-//should add them to the UserImage struct!
-var errors = null;
-var boundingBoxes = new Array();
-
+//custom function for use with express validator
+//checks the file-type of an upload
 function isImage(value, mimetype){
 	if (mimetype == undefined)
 		return false;
@@ -57,27 +45,31 @@ function isImage(value, mimetype){
 		return true;
 	default:
 		return false;
-    }
+	}
 }
 
+//middleware for express validator
 app.use(expressValidator({
 	customValidators: {
 		isImage: isImage}}));
 
 //this is an object to hold translation data
+//pronunciation is an inaccurate name, should be readings
 var UserImage = {
-	//image:"",
 	filename:"image.png",
 	textDetections:"",
 	textPronunciation:"",
 	textDetectionsList:[],
 	textPronunciationList:[]
 }	
+var errors = null;
+var boundingBoxes = new Array();
+
 
 function renderData(req, res) {
 	console.log('Sending data back');
 	console.log(UserImage.filename);
-    res.render('pages/index', {
+	res.render('pages/index', {
 		UserImage: UserImage,
 		errors: errors,
 		boundingBoxes: boundingBoxes
@@ -86,28 +78,26 @@ function renderData(req, res) {
 
 
 function resolvePath(pathStr) {
-    if(fs.existsSync(pathStr)) {
-        return path.resolve(pathStr);
-    } else {
-        //console.error('error');
-        return undefined;
-    }
+	if(fs.existsSync(pathStr)) {
+		return path.resolve(pathStr);
+	} else {
+		return undefined;
+	}
 }
 
+//send the image back over to the ejs file for display
 function sendToUpload(req, res) {
-	console.log('Sending image back');
 	res.sendFile(resolvePath('./upload/' + UserImage.filename));
-	//console.log('./upload/' + UserImage.filename);
 }
 
-//app.get('/', renderData);
-//app.get('/'+UserImage.filename, sendToUpload);
-
+//checks characters for being kanji or not using unicode 
 function isKanji(ch) {
     return (ch >= "\u4e00" && ch <= "\u9faf") ||
 	(ch >= "\u3400" && ch <= "\u4dbf");
 }
 
+// process results from the Google OCR including text detected
+// and each characters associated bounding vertexes
 function readGoogle(results) {
 	const detections = results[0].textAnnotations;
 	
@@ -146,63 +136,58 @@ function readGoogle(results) {
 		
 	}
 	
-	// note that the translation of the entire detection is not the same as the translations
-	// for the individual detections added together
-	// so translating the entire thing will not work with the highlighting feature
-	// instead, we can translate each detection individually and add them together
 	
-	//Get pronunciation data from kuroshiro
-	//UserImage.textPronunciation = kuroshiro.toHiragana(UserImage.textDetections);
 	UserImage.textPronunciation = translation;
 	
 	//detections without non-kanji characters
 	UserImage.textDetections =  detectionsKanji;
 }
 
+//another part of the image validation
 function isValidImageBody(req, res) {
-	//image validation
 	req.checkBody('image', 'Please upload an image file').isImage(req.file.mimetype);
 	var errors = req.validationErrors();
 	if(errors) {
 		res.render('pages/index', {
-		    UserImage: UserImage,
-		    boundingBoxes: boundingBoxes,
-		    errors: errors});
-        return false;
+			UserImage: UserImage,
+			boundingBoxes: boundingBoxes,
+			errors: errors});
+			return false;
 	}
-    return true;
+	return true;
 }
 
+// If valid image uploaded rename and pass it along for processing
 function translationUpload(req, res, next) {
-		if(isValidImageBody(req, res)){
-			// If valid image uploaded
-			// req.files is array of `photos` files 
-			errors = null; //resets errors variable to remove error message
-			
-			//UserImage.image = req.files.image;
-			var tempPath = req.file.path;
-			console.log(tempPath);
-			var targetPath = req.file.path+".png";
-			UserImage.filename = "/upload/"+path.basename(targetPath);
-			console.log(UserImage.filename);
-			//if (path.extname(req.file.name).toLowerCase() === '.png') {
-		    fs.renameSync(tempPath, targetPath);
-	        console.log('Renaming Done');
-			// Get Google API results
-			googleAPI.textDetection(targetPath).then(readGoogle);
-			// remove redundant files 
-			fs.readdir('upload', (err, files) => {
-				if (files.length > 5) {
-					for (i = 0; i < files.length / 2; i ++) {
-						if (files[i] != UserImage.filename) {
-							fs.unlink(".public/upload/" + files[i], (err) => {
-							if (err) throw err;
-							console.log('successfully deleted half of files');
-							});		
-						}
+	if(isValidImageBody(req, res)){ 			
+		// req.files is array of `photos` files 
+		errors = null; //resets errors variable to remove error message
+		
+		//rename the file
+		var tempPath = req.file.path;
+		var targetPath = req.file.path+".png";
+		UserImage.filename = "/upload/"+path.basename(targetPath);
+		fs.renameSync(tempPath, targetPath);
+		
+		// Get Google API results and pass them along to be processed
+		googleAPI.textDetection(targetPath).then(readGoogle);
+		
+		// remove redundant files 
+		fs.readdir('upload', (err, files) => {
+			if (files.length > 5) {
+				for (i = 0; i < files.length / 2; i ++) {
+					if (files[i] != UserImage.filename) {
+						fs.unlink(".public/upload/" + files[i], (err) => {
+						if (err) throw err;
+						console.log('successfully deleted half of files');
+						});		
 					}
 				}
-			});
+			}
+		});
+		
+		//this is crude but sets a 2 second timer for all processing to be done and then displays.
+		//should have been done using callbacks but our modularity made it difficult
 		setTimeout(function() {
 		    res.render('pages/index', {
 				UserImage: UserImage,
@@ -210,14 +195,14 @@ function translationUpload(req, res, next) {
 				boundingBoxes: boundingBoxes
 			})
 		}, 2000);
-	// req.body will contain the text fields, if there were any 
-	    }
+	}
 }
 
 app.post('/translate', upload.single('image'), translationUpload);
 app.get('/', renderData);
 app.get('/'+UserImage.filename, sendToUpload);
-//error handling middleware
+
+//nodes default error handling middleware
 app.use(function(err, req, res, next){
 	if (err.message == 'Cannot read property \'mimetype\' of undefined') {
 		errors = [{msg: "Please select a file"}];
@@ -234,9 +219,10 @@ app.use(function(err, req, res, next){
 	}
 });	
 
-
+//listen on our specified port
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
+//export functions for testing
 exports.isImage = isImage
 exports.renderData = renderData
 exports.resolvePath = resolvePath

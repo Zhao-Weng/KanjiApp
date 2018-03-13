@@ -4,14 +4,6 @@
   <% include ../partials/header.ejs %>
 </head>
 
-<!-- set text highlighting to be yellow highlights -->
-<style>
-mark {
-    background-color: yellow;
-    color: black;
-}
-</style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
@@ -55,7 +47,7 @@ mark {
 			</canvas>
         </div>
 
-        <div class="float-md-right limit-width mx-sm-auto my-5">
+        <div class="float-md-right limit-width mx-sm-auto my-5 min-w1">
 			<div class="card border-secondary">
 				<div class="card-body">
 					<h3 class="card-title">Select an image</h3>
@@ -65,19 +57,11 @@ mark {
 					  <input type="submit" value="Upload Image" name="submit" class="btn btn-secondary">
 				</div>
 			</div>
-					
+			
+			<!-- Output Cards --> 			
 			<div class="card border-secondary">
 				<div class="card-body ">
-					<h3 class="card-title"> Detected Text </h3>
-						<!-- {# <ul class="list-group list-group-flush scroll-box " id="textDetections"> -->
-							<!-- <% var detMax = UserImage.textDetections.length %> -->
-							<!-- <% var detIdx = 0 %> -->
-							<!-- <% while (detIdx < detMax) { %> -->
-								<!-- <li class="list-group-item"><%= UserImage.textDetections[detIdx] %> </li> -->
-							<!-- <%detIdx=detIdx+1%> -->
-							<!-- <%}%> -->
-						<!-- </ul> #} -->
-						
+					<h3 class="card-title"> Detected Text </h3>						
 						<ul class="list-group list-group-flush" id="textDetections">
 								<li class="list-group-item"><%= UserImage.textDetections %> </li>
 						</ul>
@@ -85,7 +69,7 @@ mark {
 			</div>
 			
 			<div class="card border-secondary">
-				<div class="card-body">
+				<div class="card-body ">
 					<h3 class="card-title"> Kanji Readings </h3>
 					<ul class="list-group list-group-flush" id="textPronunciation">
 						<li class="list-group-item"><%= UserImage.textPronunciation %> </li>
@@ -100,7 +84,7 @@ mark {
     <!-- /.container -->
 
     <!-- Footer -->
-    <footer class="py-4 footer text-faded text-center">
+    <footer class="py-4 footer text-faded text-center fixed-bottom">
       <div class="container">
         <p class="m-0 text-center text-white">Ai-Network 2018 - CS130</p>
       </div>
@@ -109,7 +93,6 @@ mark {
   
   <!-- draw bounding boxes on image, and set up highlighting -->
   <script>
-  
   window.onload = function() {
   
     //draw rectangles on canvas over bounding boxes
@@ -121,6 +104,8 @@ mark {
 	var hRatio = c.width / img.width    ;
 	var vRatio = c.height / img.height  ;
 	var ratio  = Math.min ( hRatio, vRatio );
+	
+	//Resize the uploaded image to fit in our canvas and draw it
 	ctx.drawImage(img, 0,0, img.width, img.height, 0,0,img.width*ratio, img.height*ratio);
 
     var canvas = document.getElementById('myCanvas');
@@ -192,10 +177,6 @@ mark {
       }
     }
   };
-
-
- //  }
-
 </script>
 </body>
 </html>

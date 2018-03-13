@@ -40,3 +40,13 @@ body {
 .exception-font {
 	font-size: 14pt;
 }
+
+.min-w1 {
+    min-width: 400px;
+}
+
+mark {
+    background-color: rgba(255, 224, 186, 1);
+    color: black;
+	text-align: center;
+}
