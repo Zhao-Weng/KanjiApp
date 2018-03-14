@@ -179,10 +179,10 @@ function translationUpload(req, res, next) {
 					if (files[i] != UserImage.filename) {
 						fs.unlink(".public/upload/" + files[i], (err) => {
 						if (err) throw err;
-						console.log('successfully deleted half of files');
 						});		
 					}
 				}
+				console.log('successfully deleted half of files');
 			}
 		});
 		
