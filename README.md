@@ -1,6 +1,6 @@
 # Kanji-App: Kanji Reading Assistance
 
-This project was created for Keith Stevens during Paul Eggert's CS130 Software Engineering class at UCLA, during spring quarter 2018.
+This project was created for [Keith Stevens](https://github.com/fozziethebeat) during Paul Eggert's CS130 Software Engineering class at UCLA, during spring quarter 2018.
 
 Kanji-App is a language conversion app that take in images of Japanese kanji and converts them into their subsequent hiragana so that they can be read and understood. This is similar to yomigana or furigana.
 
@@ -183,7 +183,7 @@ There several things that would need to be changed to change our app to output p
 * [Cody Hubbard](https://github.com/CSHubbard)
 * [Eric Yuan](https://github.com/ericyuan96)
 * [Nikola Samardzic](https://github.com/n-samar)
-* [Weijia Yuan]()
+* [Weijia Yuan](https://github.com/ikyuu)
 * [Xinyu Wang](https://github.com/klissancall)
 * [Zhao Weng](https://github.com/Zhao-Weng)
 

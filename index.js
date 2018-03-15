@@ -27,7 +27,7 @@ var upload = multer({
 	dest: 'public/upload/',
 	limits: { 				//limits is for file verification
 		fieldNameSize: 255,
-		fileSize: 5242880,
+		fileSize: 25242880,
 		files: 1,
 	}})
 
